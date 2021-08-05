@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <link rel="manifest" href="manifest.json" />
+    <script type="module">
+        import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+        const el = document.createElement('pwa-update');
+        document.body.appendChild(el);
+    </script>
+    <title>Home page</title>
+</head>
+<style>
+.animate-opacity{animation:opac 0.8s}@keyframes opac{from{opacity:0} to{opacity:1}}
+.animate-top{animation:animatetop 0.5s}@keyframes animatetop{from{top:500px;opacity:0} to{top:0;opacity:1}}
+.animate-bottom{animation:animatebottom 0.5s}@keyframes animatebottom{from{bottom:-600px;opacity:0} to{bottom:0;opacity:1}}
+</style>
+<body>
+    <div id="home-screen" class="animate-opacity">
+        <div class="flex flex-col" id="feelingsTab">
+            <h1 class="mx-auto text-2xl mt-16" style="font-family: 'Rubik Mono One', sans-serif;">HI PANDI!</h1>
+            <br>
+            <p class="text-center mx-2 font-semibold">(aka shiela, sophie, NY, Nakamichi........ et al)</p>
+            <br>
+
+            <div class="flex mx-auto">
+                <img src="images/IMG_0110 1.png" alt="" class="rounded-full -mr-3">
+                <img src="images/IMG_0110 1.png" alt="" class="rounded-full">
+                <img src="images/IMG_0110 1.png" alt="" class="rounded-full -ml-3">
+            </div>
+
+            <div class="mx-auto w-9/12 mb-40">
+                <h3 class="mt-24  text-xl font-semibold">Child, how are you feelin today?</h3>
+                <br>
+                <input oninput="searchForSuggestions()" type="text" name="" id="myInput" placeholder="(Enter Text Here)" class="border-black border-solid border-2 w-full p-2 text-center placeholder-black">
+                <br><br>
+                <ul id="myUL">
+                    <div class="feeling border-black border-solid border-2 w-full p-2 text-center placeholder-black"><p>Suggestion: example</p></div>
+                </ul>
+            </div>
+        </div>
+
+        <div id="solutionTab">
+            <button class="w-full bg-black text-lg p-3 text-white text-center hidden" onclick="hideSolutionTab()" id="hideSolutionBtn">^</button>
+        </div>
+    </div>
+
+    <div id="messaging-screen" class="mt-24 animate-opacity text-white" style="display: none;">
+        <div id="firebaseui-auth-container" class="mt-40">
+        </div>
+        <div id="message-container" class="absolute h-full w-full hidden">
+            <h1 class="text-xl font-bold text-center">Family message board</h1>
+            <div id="message-board" class="p-6 divide-y-2 divide-gray-600">
+                <div>
+                    <br>
+                    <h4 class="font-bold text-lg">Anonymous user</h4>
+                    <p>Sample text</p>
+                    <br>
+                </div>
+            </div>
+            <form action="" id="msgForm" class="flex m-8">
+                <input type="text" name="" id="message" class="rounded-full bg-white focus:outline-none placeholder-gray-600 text-black p-4 mx-auto w-5/6 mb-10" placeholder="Type a message">
+                <button type="submit" onclick="submitButtonClick(event)" class="hidden">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="switchOne" onclick="switchToMsgScreen()" class="bg-black text-white flex justify-between p-4 px-10 w-full absolute top-auto mt-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor" onclick="">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+        </svg>
+    </div>
+    <div id="switchTwo" onclick="switchToHomeScreen()" class="bg-white text-black flex justify-between p-4 w-full absolute top-0 px-10" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+        </svg>
+    </div>
+</body>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBNVqYp4HOqEXtdWcFsOX6kJVDeP_g1BJ0",
+        authDomain: "family-app-84a90.firebaseapp.com",
+        projectId: "family-app-84a90",
+        storageBucket: "family-app-84a90.appspot.com",
+        messagingSenderId: "569588655967",
+        appId: "1:569588655967:web:8257b377c8952354f578ea"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+</script>
+<script src="main.js"></script>
+</html>
