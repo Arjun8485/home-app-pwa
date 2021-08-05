@@ -5,7 +5,7 @@
   "short_name": "fam app",
   "scope": "/home-app/index.html",
   "display": "standalone",
-  "start_url": "/home-app/index.html",
+  "start_url": "index.html",
   "background_color": "transparent",
   "theme_color": "transparent",
   "orientation": "portrait-primary",
