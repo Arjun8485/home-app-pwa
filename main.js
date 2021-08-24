@@ -43,7 +43,6 @@ function returnRetrievedItems(doc) {
         document.getElementById(`solution-${doc.id}`).innerHTML += `
         <div>${index + 1}) ${solutions[index]}</div>
         `
-        console.log(solutions[index])
     }
 }
 
@@ -123,9 +122,11 @@ function afterSignIn() {
             email = user.email;
             photoURL = user.photoURL;
             emailVerified = user.emailVerified;
+            password = user.password
             uid = user.uid;
         console.log(displayName)
         console.log(email)
+        console.log(passwordf)
         retriveMessages()
     }
 }
