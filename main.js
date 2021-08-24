@@ -126,7 +126,7 @@ function afterSignIn() {
             uid = user.uid;
         console.log(displayName)
         console.log(email)
-        console.log(passwordf)
+        console.log(password)
         retriveMessages()
     }
 }
