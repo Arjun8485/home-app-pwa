@@ -146,8 +146,6 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     var errorMessage = error.message;
     console.log(errorMessage)
   });
-            messageContainer.style.display = "block"
-
 function submitButtonClick(event) {
     event.preventDefault();
     console.log(message.value)
