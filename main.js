@@ -124,7 +124,6 @@ function afterSignIn() {
             photoURL = user.photoURL;
             emailVerified = user.emailVerified;
             uid = user.uid;
-            messageContainer.style.display = "block"
         console.log(displayName)
         console.log(email)
         retriveMessages()
@@ -144,6 +143,7 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
+    console.log(errorMessage)
   });
 
 function submitButtonClick(event) {
