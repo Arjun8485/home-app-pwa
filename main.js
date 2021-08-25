@@ -115,22 +115,19 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    function afterSignIn() {
     switchToMsgScreen()
     user = firebase.auth().currentUser;
-    if (user !== null) {
-            displayName = user.displayName;
-            email = user.email;
-            photoURL = user.photoURL;
-            emailVerified = user.emailVerified;
-            password = user.password
-            uid = user.uid;
-            messageContainer.style.display = "block"
-        console.log(displayName)
-        console.log(email)
-        retriveMessages()
-    }
-}
+    displayName = user.displayName;
+    email = user.email;
+    photoURL = user.photoURL;
+    emailVerified = user.emailVerified;
+    password = user.password
+    uid = user.uid;
+    messageContainer.style.display = "block"
+    console.log(displayName)
+    console.log(email)
+    retriveMessages()
+    console.log("loggedIn")
   } else {
     ui.start('#firebaseui-auth-container', uiConfig)
   }
