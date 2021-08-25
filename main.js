@@ -115,7 +115,6 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    switchToMsgScreen()
     user = firebase.auth().currentUser;
     displayName = user.displayName;
     email = user.email;
