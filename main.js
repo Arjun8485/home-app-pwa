@@ -132,18 +132,6 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-firebase.firestore().enablePersistence().then(() => {
-  const firestore = app.firestore();
-  // Use Cloud Firestore ...
-    function retrieveItems(){
-    db.collection("test").get().then((snapshot) => {
-        snapshot.docs.forEach(doc => {
-            returnRetrievedItems(doc)
-        })
-    })
-}
-});
-
 function submitButtonClick(event) {
     event.preventDefault();
     console.log(message.value)
