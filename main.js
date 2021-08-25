@@ -99,7 +99,7 @@ var uiConfig = {
     callbacks: {
             signInSuccessWithAuthResult: function(authResult, redirectUrl) {
 
-        return true;
+        return false;
         },
     },
     signInFlow: 'popup',
